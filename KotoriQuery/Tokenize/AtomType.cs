@@ -15,7 +15,7 @@ namespace KotoriQuery.Tokenize
         Slash,
         Plus,
         Minus,
-        Dot,
+        Dot, // used
         Exclamation,
         ExclamationThenEqual,
         Equal,

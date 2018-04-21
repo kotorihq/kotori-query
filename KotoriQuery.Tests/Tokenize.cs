@@ -40,5 +40,25 @@ namespace KotoriQuery.Tests
             Assert.Equal(AtomType.Identifier, atoms.ToArray()[5].Type);
             Assert.Equal(AtomType.Done, atoms.ToArray()[6].Type);
         }
+
+        [Fact]
+        public void DotInIdentifier()
+        {
+            var q = "foo.Bar.x_y_z_1";
+            var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
+            
+            Assert.Equal(6, atoms.Count());
+            
+            Assert.Equal(AtomType.Identifier, atoms.ToArray()[0].Type);
+            Assert.Equal("foo", atoms.ToArray()[0].GetText(q));
+            Assert.Equal(AtomType.Dot, atoms.ToArray()[1].Type);
+            Assert.Equal(".", atoms.ToArray()[1].GetText(q));;
+            Assert.Equal(AtomType.Identifier, atoms.ToArray()[2].Type);
+            Assert.Equal("Bar", atoms.ToArray()[2].GetText(q));;
+            Assert.Equal(AtomType.Dot, atoms.ToArray()[3].Type);
+            Assert.Equal(AtomType.Identifier, atoms.ToArray()[4].Type);
+            Assert.Equal("x_y_z_1", atoms.ToArray()[4].GetText(q));;
+            Assert.Equal(AtomType.Done, atoms.ToArray()[5].Type);
+        }
     }
 }
