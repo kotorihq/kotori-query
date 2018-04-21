@@ -4,9 +4,9 @@ namespace KotoriQuery.Tokenize
 {
     public enum AtomType {
         Bad,
-        Spaces,
-        Comma,
-        Identifier,
+        Spaces, // used
+        Comma, // used
+        Identifier, // used
         Understore,
         Integer,
         Float,
@@ -30,7 +30,7 @@ namespace KotoriQuery.Tokenize
         AmpersandPair,
         Pipe,
         PipePair,
-        Done
+        Done // used
     }
 
     public static class AtomTypeHelper {

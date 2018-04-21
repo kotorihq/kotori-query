@@ -21,15 +21,12 @@ namespace KotoriQuery.Tokenize
 
         public override string ToString() 
         {
-            try
-            {
-                var c = char.ConvertFromUtf32(Code);
-                return c;
-            }
-            catch
-            {
-                return " ";
-            }
+            if (Code == -1)
+                return string.Empty;
+
+            var c = char.ConvertFromUtf32(Code);
+            
+            return c;
         }
     }
 }
