@@ -1,0 +1,8 @@
+KotoriQuery/bin/Debug
+KotoriQuery/obj/Debug
+KotoriQuery.Tests/bin/Debug
+KotoriQuery.Tests/obj
+KotoriQuery/obj
+.vs
+.vscode
+
