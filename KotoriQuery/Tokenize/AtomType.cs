@@ -13,7 +13,7 @@ namespace KotoriQuery.Tokenize
         Float,
         String,
         Asterisk,
-        Slash,
+        Slash, // used
         Plus,
         Minus,
         Dot, // used
