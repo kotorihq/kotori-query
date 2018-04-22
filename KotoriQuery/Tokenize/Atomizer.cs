@@ -96,7 +96,7 @@ namespace KotoriQuery.Tokenize
         private void NextAtom() 
         {
             var beginning = _position;
-
+            
             switch (_c)
             {
                 case '*':
@@ -131,17 +131,21 @@ namespace KotoriQuery.Tokenize
 
                     _atom = new Atom(AtomType.Exclamation, beginning, beginning);
                     break;
-                case '=':
+                case 'e':
                     NextCharacter();
 
-                    if (_c == '=') 
+                    if (_c == 'q') 
                     {
                         NextCharacter();
-                        _atom = new Atom(AtomType.EqualPair, beginning, _position);
-                        break;
+
+                        if (Tester.IsWhiteSpace(_c))
+                        {
+                            _atom = new Atom(AtomType.Equal, beginning, _position);
+                            break;
+                        }
                     }
 
-                    _atom = new Atom(AtomType.Equal, beginning, beginning);
+                    TryConsumeIdentifier();
                     break;
                 case '<':
                     NextCharacter();
@@ -280,7 +284,9 @@ namespace KotoriQuery.Tokenize
                 if (startWithUnderscore && length == 0) 
                 {
                     _atom = new Atom(AtomType.Understore, beginning, finishing);
-                } else {
+                } 
+                else 
+                {
                     _atom = new Atom(AtomType.Identifier, beginning, finishing);
                 }
 

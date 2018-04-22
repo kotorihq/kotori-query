@@ -92,5 +92,26 @@ namespace KotoriQuery.Tests
             Assert.Equal("x_y_z_1", atoms.ToArray()[4].GetText(q));;
             Assert.Equal(AtomType.Done, atoms.ToArray()[5].Type);
         }
+
+        [Theory]
+        [InlineData("foo/bar eq 123")]
+        [InlineData("foo/bar eq 0")]
+        [InlineData("foo/eqaul eq 0")]
+        [InlineData("eq/eqaul eq 42")]
+        public void ConditionEqString(string q)
+        {
+            var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
+            
+            Assert.Equal(8, atoms.Count());
+
+            Assert.Equal(AtomType.Identifier, atoms.ToArray()[0].Type);
+            Assert.Equal(AtomType.Slash, atoms.ToArray()[1].Type);
+            Assert.Equal(AtomType.Identifier, atoms.ToArray()[2].Type);
+            Assert.Equal(AtomType.Spaces, atoms.ToArray()[3].Type);
+            Assert.Equal(AtomType.Equal, atoms.ToArray()[4].Type);
+            Assert.Equal(AtomType.Spaces, atoms.ToArray()[5].Type);
+            Assert.Equal(AtomType.Integer, atoms.ToArray()[6].Type);
+            Assert.Equal(AtomType.Done, atoms.ToArray()[7].Type);
+        }
     }
 }
