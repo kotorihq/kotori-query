@@ -2,7 +2,8 @@ using System.Collections.Generic;
 
 namespace KotoriQuery.Tokenize
 {
-    public enum AtomType {
+    public enum AtomType 
+    {
         Bad,
         Spaces, // used
         Comma, // used
@@ -33,8 +34,10 @@ namespace KotoriQuery.Tokenize
         Done // used
     }
 
-    public static class AtomTypeHelper {
-        private static Dictionary<string, AtomType> lookup = new Dictionary<string, AtomType> { 
+    public static class AtomTypeHelper 
+    {
+        private static Dictionary<string, AtomType> lookup = new Dictionary<string, AtomType> 
+        { 
            { "Bad", AtomType.Bad },
            { "Spaces", AtomType.Spaces },
            { "Comma", AtomType.Comma },
@@ -65,7 +68,8 @@ namespace KotoriQuery.Tokenize
            { "Done", AtomType.Done }
         };
 
-        public static AtomType ToEnum(string key) {
+        public static AtomType ToEnum(string key) 
+        {
             AtomType ret;
 
             return lookup.TryGetValue(key, out ret) ? ret : AtomType.Bad;

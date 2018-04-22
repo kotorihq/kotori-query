@@ -49,9 +49,7 @@ namespace KotoriQuery.Tokenize
         private bool MoveNext() 
         {
             if (_atom.Type == AtomType.Done) 
-            {
                 return false;
-            }
 
             NextAtom();
 
@@ -71,9 +69,8 @@ namespace KotoriQuery.Tokenize
 
                 _nextPosition.Offset = curr;
 
-                if (nullable.HasValue) {
+                if (nullable.HasValue)
                     return nullable.Value;
-                }
 
                 return End; // dead-end (-1)
             } 
@@ -125,7 +122,8 @@ namespace KotoriQuery.Tokenize
                 case '!':
                     NextCharacter();
 
-                    if (_c == '=') {
+                    if (_c == '=') 
+                    {
                         NextCharacter();
                         _atom = new Atom(AtomType.ExclamationThenEqual, beginning, _position);
                         break;
@@ -234,16 +232,19 @@ namespace KotoriQuery.Tokenize
         /// Store next characters while white spaces
         /// </summary>
         /// <returns></returns>
-        private bool TryConsumeWhitespaces() {
+        private bool TryConsumeWhitespaces() 
+        {
             var beginning = _position;
             var finishing = _position;
 
-            while (Tester.IsWhiteSpace(_c)) {
+            while (Tester.IsWhiteSpace(_c)) 
+            {
                 finishing = _position;
                 NextCharacter();
             }
 
-            if (!beginning.Equals(_position)) {
+            if (!beginning.Equals(_position)) 
+            {
                 _atom = new Atom(AtomType.Spaces, beginning, finishing);
                 return true;
             }
@@ -255,24 +256,29 @@ namespace KotoriQuery.Tokenize
         /// Store next characters while identifiers or an understore (special "this" character)
         /// </summary>
         /// <returns></returns>
-        private bool TryConsumeIdentifier() {
+        private bool TryConsumeIdentifier() 
+        {
             var beginning = _position;
             var finishing = _position;
 
             var startWithUnderscore = '_' == _c;
 
             var isHead = true;
-            while (isHead ? Tester.IsIdentifierHead(_c) : Tester.IsIdentifierTailing(_c)) {
+
+            while (isHead ? Tester.IsIdentifierHead(_c) : Tester.IsIdentifierTailing(_c)) 
+            {
                 finishing = _position;
                 NextCharacter();
 
                 isHead = false;
             }
 
-            if (!beginning.Equals(_position)) {
+            if (!beginning.Equals(_position)) 
+            {
                 var length = finishing.Offset - beginning.Offset;
 
-                if (startWithUnderscore && length == 0) {
+                if (startWithUnderscore && length == 0) 
+                {
                     _atom = new Atom(AtomType.Understore, beginning, finishing);
                 } else {
                     _atom = new Atom(AtomType.Identifier, beginning, finishing);
@@ -288,33 +294,39 @@ namespace KotoriQuery.Tokenize
         /// Store next characters while numbers (long/integer or double/float)
         /// </summary>
         /// <returns></returns>
-        private bool TryConsumeNumber() {
+        private bool TryConsumeNumber() 
+        {
             var beginning = _position;
             var finishing = _position;
             var isFloat = false;
 
-            while (Tester.IsDigit(_c)) {
+            while (Tester.IsDigit(_c)) 
+            {
                 finishing = _position;
                 NextCharacter();
             }
 
-            if (_c == '.') {
+            if (_c == '.') 
+            {
                 NextCharacter();
 
-                if (!Tester.IsDigit(_c)) {
+                if (!Tester.IsDigit(_c)) 
+                {
                     _atom = new Atom(AtomType.Bad, beginning, finishing);
                     return true; // read then stored
                 }
 
                 isFloat = true;
 
-                while (Tester.IsDigit(_c)) {
+                while (Tester.IsDigit(_c)) 
+                {
                     finishing = _position;
                     NextCharacter();
                 }
             }
 
-            if (!beginning.Equals(_position)) {
+            if (!beginning.Equals(_position)) 
+            {
                 _atom = new Atom(isFloat ? AtomType.Float : AtomType.Integer, beginning, finishing);
                 return true;
             }
@@ -326,20 +338,26 @@ namespace KotoriQuery.Tokenize
         /// Consume strings
         /// </summary>
         /// <param name="beginning"></param>
-        private void ConsumeString(TextPosition beginning) {
+        private void ConsumeString(TextPosition beginning) 
+        {
             var finishing = _position;
             Char32 startChar = _c;
 
             NextCharacter();  // skip quote
-            while (true) {
-                if (TryConsumeChar(ref finishing, startChar)) {
-                    if (_c == startChar) { // ending quote or loop until the reader reaches a hard limit
+            while (true) 
+            {
+                if (TryConsumeChar(ref finishing, startChar)) 
+                {
+                    if (_c == startChar) 
+                    { // ending quote or loop until the reader reaches a hard limit
                         finishing = _position;
                         NextCharacter(); // skip quote
 
                         break;
                     }
-                } else {
+                } 
+                else 
+                {
                     _atom = new Atom(AtomType.Bad, beginning, finishing);
                     return;
                 }
@@ -354,12 +372,15 @@ namespace KotoriQuery.Tokenize
         /// <param name="finishing"></param>
         /// <param name="startChar"></param>
         /// <returns></returns>
-        private bool TryConsumeChar(ref TextPosition finishing, Char32 startChar) {
-            if (_c == End) {
+        private bool TryConsumeChar(ref TextPosition finishing, Char32 startChar) 
+        {
+            if (_c == End) 
+            {
                 return false;
             }
 
-            if (_c != startChar) {
+            if (_c != startChar) 
+            {
                 finishing = _position;
                 NextCharacter();
             }
@@ -372,13 +393,15 @@ namespace KotoriQuery.Tokenize
         /// </summary>
         /// <param name="characters"></param>
         /// <returns></returns>
-        private bool IsNext(string characters) {
+        private bool IsNext(string characters) 
+        {
             var savedPosition = _position;
             var savedNextPosition = _nextPosition;
 
             var match = true;
             foreach (char c in characters) {
-                if (!ReadNextCharacter().Equals(c)) {
+                if (!ReadNextCharacter().Equals(c)) 
+                {
                     match = false;
                     break;
                 }
@@ -393,10 +416,12 @@ namespace KotoriQuery.Tokenize
         /// <summary>
         /// Exposes private methods to Atomizer as an enumerator of atoms
         /// </summary>
-        public struct Enumerator: IEnumerator<Atom> {
+        public struct Enumerator: IEnumerator<Atom> 
+        {
             private readonly Atomizer<TReader> _atomizer;
 
-            public Enumerator(Atomizer<TReader> atomizer) {
+            public Enumerator(Atomizer<TReader> atomizer) 
+            {
                 _atomizer = atomizer;
                 atomizer.Reset();
             }
@@ -405,14 +430,16 @@ namespace KotoriQuery.Tokenize
             /// Advances the enumerator to the next element of the collection
             /// </summary>
             /// <returns></returns>
-            public bool MoveNext() {
+            public bool MoveNext() 
+            {
                 return _atomizer.MoveNext();
             }
 
             /// <summary>
             /// Sets the enumerator to its initial position, which is before the first element in the collection.
             /// </summary>
-            public void Reset() {
+            public void Reset() 
+            {
                 _atomizer.Reset();
             }
 
@@ -426,8 +453,8 @@ namespace KotoriQuery.Tokenize
             /// <summary>
             /// Struct (bye-bye)
             /// </summary>
-            public void Dispose() {
-
+            public void Dispose() 
+            {
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 
-namespace KotoriQuery.Tokenize {
-
+namespace KotoriQuery.Tokenize 
+{
     public struct Atom 
     {
         public static readonly Atom Done = new Atom(AtomType.Done, TextPosition.Done, TextPosition.Done);
