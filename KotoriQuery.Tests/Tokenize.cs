@@ -60,5 +60,17 @@ namespace KotoriQuery.Tests
             Assert.Equal("x_y_z_1", atoms.ToArray()[4].GetText(q));;
             Assert.Equal(AtomType.Done, atoms.ToArray()[5].Type);
         }
+
+        [Theory]
+        [InlineData("±")]
+        //[InlineData("!")]
+        [InlineData("?")]
+        public void BadOnes(string q)
+        {
+            var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
+            
+            Assert.Equal(2, atoms.Count());
+            Assert.Equal(AtomType.Bad, atoms.First().Type);
+        }
     }
 }
