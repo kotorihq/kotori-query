@@ -281,8 +281,6 @@ namespace KotoriQuery.Tokenize
             var beginning = _position;
             var finishing = _position;
 
-            var startWithUnderscore = '_' == _c;
-
             var isHead = true;
 
             while (isHead ? Tester.IsIdentifierHead(_c) : Tester.IsIdentifierTailing(_c)) 
@@ -295,16 +293,7 @@ namespace KotoriQuery.Tokenize
 
             if (!beginning.Equals(_position)) 
             {
-                var length = finishing.Offset - beginning.Offset;
-
-                if (startWithUnderscore && length == 0) 
-                {
-                    _atom = new Atom(AtomType.Understore, beginning, finishing);
-                } 
-                else 
-                {
-                    _atom = new Atom(AtomType.Identifier, beginning, finishing);
-                }
+                _atom = new Atom(AtomType.Identifier, beginning, finishing);
 
                 return true;
             }

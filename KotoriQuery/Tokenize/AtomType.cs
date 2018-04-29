@@ -8,10 +8,9 @@ namespace KotoriQuery.Tokenize
         Spaces, // used
         Comma, // used
         Identifier, // used
-        Understore,
         Integer, // used
         Float, // used
-        String,
+        String, // used
         Asterisk,
         Slash, // used
         Plus,
@@ -42,7 +41,6 @@ namespace KotoriQuery.Tokenize
            { "Spaces", AtomType.Spaces },
            { "Comma", AtomType.Comma },
            { "Identifier", AtomType.Identifier },
-           { "Understore", AtomType.Understore },
            { "Integer", AtomType.Integer },
            { "Float", AtomType.Float },
            { "String", AtomType.String },

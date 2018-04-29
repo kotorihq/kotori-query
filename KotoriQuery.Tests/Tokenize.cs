@@ -156,7 +156,7 @@ namespace KotoriQuery.Tests
         [Fact]
         public void StringValue()
         {
-            var q = "pookie eq 'something'";
+            var q = "_poo_kie eq 'something'";
             var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
             
             Assert.Equal(6, atoms.Count());
@@ -171,6 +171,7 @@ namespace KotoriQuery.Tests
                 AtomType.Done
             }, atoms.Select(x => x.Type));
 
+            Assert.Equal("_poo_kie", atoms.ToArray()[0].GetText(q));
             Assert.Equal("'something'", atoms.ToArray()[4].GetText(q));
         }
     }
