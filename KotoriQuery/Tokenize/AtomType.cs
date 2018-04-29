@@ -9,8 +9,8 @@ namespace KotoriQuery.Tokenize
         Comma, // used
         Identifier, // used
         Understore,
-        Integer,
-        Float,
+        Integer, // used
+        Float, // used
         String,
         Asterisk,
         Slash, // used

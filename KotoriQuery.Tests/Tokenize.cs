@@ -132,7 +132,7 @@ namespace KotoriQuery.Tests
         }
 
         [Fact]
-        public void ConditionEqString2()
+        public void ConditionEqFloat()
         {
             var q = "foo/eqie eq 3.12";
             var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
@@ -151,6 +151,27 @@ namespace KotoriQuery.Tests
                 AtomType.Float,
                 AtomType.Done
             }, atoms.Select(x => x.Type));
+        }
+
+        [Fact]
+        public void StringValue()
+        {
+            var q = "pookie eq 'something'";
+            var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
+            
+            Assert.Equal(6, atoms.Count());
+
+            Assert.Equal(new List<AtomType> 
+            { 
+                AtomType.Identifier,
+                AtomType.Spaces,
+                AtomType.Equal,
+                AtomType.Spaces,
+                AtomType.String,
+                AtomType.Done
+            }, atoms.Select(x => x.Type));
+
+            Assert.Equal("'something'", atoms.ToArray()[4].GetText(q));
         }
     }
 }

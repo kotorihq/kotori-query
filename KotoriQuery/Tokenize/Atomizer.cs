@@ -193,7 +193,7 @@ namespace KotoriQuery.Tokenize
                     _atom = new Atom(AtomType.Comma, beginning, beginning);
                     break;
 
-                case '"':
+                case '\'':
                     ConsumeString(beginning);
                     break;
 
