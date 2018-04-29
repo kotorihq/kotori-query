@@ -103,22 +103,27 @@ namespace KotoriQuery.Tokenize
                     NextCharacter();
                     _atom = new Atom(AtomType.Asterisk, beginning, beginning);
                     break;
+
                 case '/':
                     NextCharacter();
                     _atom = new Atom(AtomType.Slash, beginning, beginning);
                     break;
+
                 case '+':
                     NextCharacter();
                     _atom = new Atom(AtomType.Plus, beginning, beginning);
                     break;
+
                 case '-':
                     NextCharacter();
                     _atom = new Atom(AtomType.Minus, beginning, beginning);
                     break;
+
                 case '.':
                     NextCharacter();
                     _atom = new Atom(AtomType.Dot, beginning, beginning);
                     break;
+
                 case '!':
                     NextCharacter();
 
@@ -131,6 +136,7 @@ namespace KotoriQuery.Tokenize
 
                     _atom = new Atom(AtomType.Exclamation, beginning, beginning);
                     break;
+
                 case 'e':
                     NextCharacter();
 
@@ -145,8 +151,9 @@ namespace KotoriQuery.Tokenize
                         }
                     }
 
-                    TryConsumeIdentifier();
+                    _atom = new Atom(AtomType.E, beginning, beginning);
                     break;
+
                 case '<':
                     NextCharacter();
 
@@ -158,6 +165,7 @@ namespace KotoriQuery.Tokenize
 
                     _atom = new Atom(AtomType.LessThan, beginning, beginning);
                     break;
+
                 case '>':
                     NextCharacter();
 
@@ -169,21 +177,26 @@ namespace KotoriQuery.Tokenize
 
                     _atom = new Atom(AtomType.GreaterThan, beginning, beginning);
                     break;
+
                 case '(':
                     NextCharacter();
                     _atom = new Atom(AtomType.OpenParenthesis, beginning, beginning);
                     break;
+
                 case ')':
                     NextCharacter();
                     _atom = new Atom(AtomType.CloseParenthesis, beginning, beginning);
                     break;
+
                 case ',':
                     NextCharacter();
                     _atom = new Atom(AtomType.Comma, beginning, beginning);
                     break;
+
                 case '"':
                     ConsumeString(beginning);
                     break;
+
                 case '&':
                     NextCharacter();
 
@@ -195,6 +208,7 @@ namespace KotoriQuery.Tokenize
                     
                     _atom = new Atom(AtomType.Ampersand, beginning, beginning);
                     break;
+
                 case '|':
                     NextCharacter();
 
@@ -206,9 +220,11 @@ namespace KotoriQuery.Tokenize
 
                     _atom = new Atom(AtomType.Pipe, beginning, beginning);
                     break;
+
                 case End:
                     _atom = Atom.Done;
                     break;
+
                 default:
                     // stop if read whitespaces
                     if (TryConsumeWhitespaces()) {
