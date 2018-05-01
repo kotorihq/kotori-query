@@ -137,13 +137,12 @@ namespace KotoriQuery.Tests
             var q = "foo/eqie eq 3.12";
             var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
             
-            Assert.Equal(9, atoms.Count());
+            Assert.Equal(8, atoms.Count());
 
             Assert.Equal(new List<AtomType> 
             { 
                 AtomType.Identifier,
                 AtomType.Slash,
-                AtomType.E,
                 AtomType.Identifier,
                 AtomType.Spaces,
                 AtomType.Equal,

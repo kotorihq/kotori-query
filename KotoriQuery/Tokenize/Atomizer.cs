@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace KotoriQuery.Tokenize
 {
@@ -137,27 +138,11 @@ namespace KotoriQuery.Tokenize
                     _atom = new Atom(AtomType.Exclamation, beginning, beginning);
                     break;
 
-                case 'e':
-                    NextCharacter();
-
-                    if (_c == 'q') 
-                    {
-                        NextCharacter();
-
-                        if (Tester.IsWhiteSpace(_c))
-                        {
-                            _atom = new Atom(AtomType.Equal, beginning, _position);
-                            break;
-                        }
-                    }
-
-                    _atom = new Atom(AtomType.E, beginning, beginning);
-                    break;
-
                 case '<':
                     NextCharacter();
 
-                    if (_c == '=') {
+                    if (_c == '=') 
+                    {
                         NextCharacter();
                         _atom = new Atom(AtomType.LessThanThenEqual, beginning, _position);
                         break;
@@ -169,7 +154,8 @@ namespace KotoriQuery.Tokenize
                 case '>':
                     NextCharacter();
 
-                    if (_c == '=') {
+                    if (_c == '=') 
+                    {
                         NextCharacter();
                         _atom = new Atom(AtomType.GreaterThanThenEqual, beginning, _position);
                         break;
@@ -227,19 +213,16 @@ namespace KotoriQuery.Tokenize
 
                 default:
                     // stop if read whitespaces
-                    if (TryConsumeWhitespaces()) {
+                    if (TryConsumeWhitespaces())
                         break;
-                    }
 
                     // stop if read identifiers
-                    if (TryConsumeIdentifier()) {
+                    if (TryConsumeIdentifier())
                         break;
-                    }
 
                     // stop if read numbers
-                    if (TryConsumeNumber()) {
+                    if (TryConsumeNumber())
                         break;
-                    }
 
                     // finally if nothing read then bad
                     _atom = new Atom(AtomType.Bad, _position, _position);
@@ -275,11 +258,11 @@ namespace KotoriQuery.Tokenize
         /// <summary>
         /// Store next characters while identifiers or an understore (special "this" character)
         /// </summary>
-        /// <returns></returns>
         private bool TryConsumeIdentifier() 
         {
             var beginning = _position;
             var finishing = _position;
+            var part = _c.ToString();
 
             var isHead = true;
 
@@ -287,13 +270,20 @@ namespace KotoriQuery.Tokenize
             {
                 finishing = _position;
                 NextCharacter();
+                
+                part += _c;
 
                 isHead = false;
             }
 
             if (!beginning.Equals(_position)) 
             {
-                _atom = new Atom(AtomType.Identifier, beginning, finishing);
+                var id = AtomType.Identifier;
+
+                if (part == "eq ")
+                    id = AtomType.Equal;
+
+                _atom = new Atom(id, beginning, finishing);
 
                 return true;
             }
@@ -354,15 +344,20 @@ namespace KotoriQuery.Tokenize
             var finishing = _position;
             Char32 startChar = _c;
 
-            NextCharacter();  // skip quote
+            // skip quote
+            NextCharacter();
+
             while (true) 
             {
                 if (TryConsumeChar(ref finishing, startChar)) 
                 {
+                    // ending quote or loop until the reader reaches a hard limit
                     if (_c == startChar) 
-                    { // ending quote or loop until the reader reaches a hard limit
+                    { 
                         finishing = _position;
-                        NextCharacter(); // skip quote
+
+                        // skip quote
+                        NextCharacter(); 
 
                         break;
                     }

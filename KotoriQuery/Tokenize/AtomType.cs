@@ -18,7 +18,6 @@ namespace KotoriQuery.Tokenize
         Dot, // used
         Exclamation,
         ExclamationThenEqual,
-        E, // used
         Equal, // used
         LessThan,
         LessThanThenEqual,

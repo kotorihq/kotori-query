@@ -24,11 +24,12 @@ namespace KotoriQuery.Tokenize
 
         public string GetText(string text) 
         {
-            if (Type.Equals(AtomType.Done)) {
+            if (Type.Equals(AtomType.Done))
                 return String.Empty;
-            }
 
-            if (Start.Offset < text.Length && End.Offset < text.Length) {
+            if (Start.Offset < text.Length && 
+                End.Offset < text.Length) 
+            {
                 return text.Substring(Start.Offset, End.Offset - Start.Offset + 1);
             }
 
