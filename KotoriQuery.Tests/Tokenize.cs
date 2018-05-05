@@ -215,5 +215,34 @@ namespace KotoriQuery.Tests
                 AtomType.Done
             }, atoms.Select(x => x.Type));
         }
+
+        [Fact]
+        public void OrderBy()
+        {
+            var q = "one    asc,two desc ,three,four asc";
+
+            var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
+            
+            Assert.Equal(15, atoms.Count());
+
+            Assert.Equal(new List<AtomType> 
+            { 
+                AtomType.Identifier,
+                AtomType.Spaces,
+                AtomType.Ascending,
+                AtomType.Comma,
+                AtomType.Identifier,
+                AtomType.Spaces,
+                AtomType.Descending,
+                AtomType.Spaces,
+                AtomType.Comma,
+                AtomType.Identifier,
+                AtomType.Comma,
+                AtomType.Identifier,
+                AtomType.Spaces,
+                AtomType.Ascending,
+                AtomType.Done
+            }, atoms.Select(x => x.Type));
+        }
     }
 }

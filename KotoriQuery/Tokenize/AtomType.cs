@@ -24,6 +24,8 @@ namespace KotoriQuery.Tokenize
         GreaterThanThenEqual, // used
         OpenParenthesis,
         CloseParenthesis,
+        Ascending, // used
+        Descending, // used
         Done // used
     }
 

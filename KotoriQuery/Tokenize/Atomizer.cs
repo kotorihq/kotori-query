@@ -261,6 +261,16 @@ namespace KotoriQuery.Tokenize
                 if (part == "gte ")
                     id = AtomType.GreaterThanThenEqual;
 
+                if (part == "asc " ||
+                    part == "asc" || 
+                    part == "asc,")
+                    id = AtomType.Ascending;
+
+                if (part == "desc " ||
+                    part == "desc" ||
+                    part == "desc,")
+                    id = AtomType.Descending;
+
                 _atom = new Atom(id, beginning, finishing);
 
                 return true;
