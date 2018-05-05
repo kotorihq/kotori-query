@@ -53,6 +53,8 @@ namespace KotoriQuery.Tokenize
            { "GreaterThanThenEqual", AtomType.GreaterThanThenEqual },
            { "OpenParenthesis", AtomType.OpenParenthesis },
            { "CloseParenthesis", AtomType.CloseParenthesis },
+           { "Ascending", AtomType.Ascending },
+           { "Descending", AtomType.Ascending },
            { "Done", AtomType.Done }
         };
 
