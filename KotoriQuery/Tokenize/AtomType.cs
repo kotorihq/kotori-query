@@ -4,30 +4,29 @@ namespace KotoriQuery.Tokenize
 {
     public enum AtomType 
     {
-        Bad, // used
-        Spaces, // used
-        Comma, // used
-        Identifier, // used
-        Integer, // used
-        Float, // used
-        String, // used
-        Asterisk, // used
-        Slash, // used
+        Bad,
+        Spaces,
+        Comma,
+        Identifier,
+        Integer,
+        Float,
+        String,
+        Asterisk,
+        Slash,
         Plus,
         Minus,
-        Dot, // used
-        Equal, // used
-        NotEqual, // used
-        LessThan, // used
-        LessThanThenEqual, // used
-        GreaterThan, // used
-        GreaterThanThenEqual, // used
+        Equal,
+        NotEqual,
+        LessThan,
+        LessThanThenEqual,
+        GreaterThan,
+        GreaterThanThenEqual,
         OpenParenthesis,
         CloseParenthesis,
-        Ascending, // used
-        Descending, // used
-        And, // used
-        Or, // used
+        Ascending,
+        Descending,
+        And,
+        Or,
         Done // used
     }
 
@@ -46,7 +45,6 @@ namespace KotoriQuery.Tokenize
            { "Slash", AtomType.Slash },
            { "Plus", AtomType.Plus },
            { "Minus", AtomType.Minus },
-           { "Dot", AtomType.Dot },
            { "Equal", AtomType.Equal },
            { "NotEqual", AtomType.NotEqual },
            { "LessThan", AtomType.LessThan },

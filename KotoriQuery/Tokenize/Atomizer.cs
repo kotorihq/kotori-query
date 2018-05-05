@@ -120,11 +120,6 @@ namespace KotoriQuery.Tokenize
                     _atom = new Atom(AtomType.Minus, beginning, beginning);
                     break;
 
-                case '.':
-                    NextCharacter();
-                    _atom = new Atom(AtomType.Dot, beginning, beginning);
-                    break;
-
                 case '<':
                     NextCharacter();
 
