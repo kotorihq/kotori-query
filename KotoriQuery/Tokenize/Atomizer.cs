@@ -110,42 +110,6 @@ namespace KotoriQuery.Tokenize
                     _atom = new Atom(AtomType.Slash, beginning, beginning);
                     break;
 
-                case '+':
-                    NextCharacter();
-                    _atom = new Atom(AtomType.Plus, beginning, beginning);
-                    break;
-
-                case '-':
-                    NextCharacter();
-                    _atom = new Atom(AtomType.Minus, beginning, beginning);
-                    break;
-
-                case '<':
-                    NextCharacter();
-
-                    if (_c == '=') 
-                    {
-                        NextCharacter();
-                        _atom = new Atom(AtomType.LessThanThenEqual, beginning, _position);
-                        break;
-                    }
-
-                    _atom = new Atom(AtomType.LessThan, beginning, beginning);
-                    break;
-
-                case '>':
-                    NextCharacter();
-
-                    if (_c == '=') 
-                    {
-                        NextCharacter();
-                        _atom = new Atom(AtomType.GreaterThanThenEqual, beginning, _position);
-                        break;
-                    }
-
-                    _atom = new Atom(AtomType.GreaterThan, beginning, beginning);
-                    break;
-
                 case '(':
                     NextCharacter();
                     _atom = new Atom(AtomType.OpenParenthesis, beginning, beginning);
