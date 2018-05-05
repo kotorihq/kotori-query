@@ -173,5 +173,21 @@ namespace KotoriQuery.Tests
             Assert.Equal("_poo_kie", atoms.ToArray()[0].GetText(q));
             Assert.Equal("'something'", atoms.ToArray()[4].GetText(q));
         }
+
+        [Fact]
+        public void Asterisk()
+        {
+            var q = "*";
+
+            var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
+            
+            Assert.Equal(2, atoms.Count());
+
+            Assert.Equal(new List<AtomType> 
+            { 
+                AtomType.Asterisk,
+                AtomType.Done
+            }, atoms.Select(x => x.Type));
+        }
     }
 }
