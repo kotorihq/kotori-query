@@ -26,6 +26,8 @@ namespace KotoriQuery.Tokenize
         CloseParenthesis,
         Ascending, // used
         Descending, // used
+        And, // used
+        Or, // used
         Done // used
     }
 
@@ -55,6 +57,8 @@ namespace KotoriQuery.Tokenize
            { "CloseParenthesis", AtomType.CloseParenthesis },
            { "Ascending", AtomType.Ascending },
            { "Descending", AtomType.Ascending },
+           { "And", AtomType.And },
+           { "Or", AtomType.Or },
            { "Done", AtomType.Done }
         };
 

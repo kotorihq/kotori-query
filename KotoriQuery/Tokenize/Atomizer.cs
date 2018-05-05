@@ -261,6 +261,12 @@ namespace KotoriQuery.Tokenize
                 if (part == "gte ")
                     id = AtomType.GreaterThanThenEqual;
 
+                if (part == "and ")
+                    id = AtomType.And;
+
+                if (part == "or ")
+                    id = AtomType.Or;
+
                 if (part == "asc " ||
                     part == "asc" || 
                     part == "asc,")

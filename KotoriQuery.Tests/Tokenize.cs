@@ -273,5 +273,41 @@ namespace KotoriQuery.Tests
                 AtomType.Done
             }, atoms.Select(x => x.Type));
         }
+
+        [Fact]
+        public void Logical()
+        {
+            var q = "andx eq 3 and mori eq 4 or x_o ne 'something'";
+
+            var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
+            
+            Assert.Equal(22, atoms.Count());
+
+            Assert.Equal(new List<AtomType> 
+            { 
+                AtomType.Identifier,
+                AtomType.Spaces,
+                AtomType.Equal,
+                AtomType.Spaces,
+                AtomType.Integer,
+                AtomType.Spaces,
+                AtomType.And,
+                AtomType.Spaces,
+                AtomType.Identifier,
+                AtomType.Spaces,
+                AtomType.Equal,
+                AtomType.Spaces,
+                AtomType.Integer,
+                AtomType.Spaces,
+                AtomType.Or,
+                AtomType.Spaces,
+                AtomType.Identifier,
+                AtomType.Spaces,
+                AtomType.NotEqual,
+                AtomType.Spaces,
+                AtomType.String,
+                AtomType.Done
+            }, atoms.Select(x => x.Type));
+        }
     }
 }
