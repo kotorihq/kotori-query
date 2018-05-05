@@ -19,10 +19,11 @@ namespace KotoriQuery.Tokenize
         Exclamation,
         ExclamationThenEqual,
         Equal, // used
-        LessThan,
-        LessThanThenEqual,
-        GreaterThan,
-        GreaterThanThenEqual,
+        NotEqual, // used
+        LessThan, // used
+        LessThanThenEqual, // used
+        GreaterThan, // used
+        GreaterThanThenEqual, // used
         OpenParenthesis,
         CloseParenthesis,
         Ampersand,

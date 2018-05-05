@@ -283,6 +283,21 @@ namespace KotoriQuery.Tokenize
                 if (part == "eq ")
                     id = AtomType.Equal;
 
+                if (part == "ne ")
+                    id = AtomType.NotEqual;
+
+                if (part == "lt ")
+                    id = AtomType.LessThan;
+
+                if (part == "gt ")
+                    id = AtomType.GreaterThan;
+
+                if (part == "lte ")
+                    id = AtomType.LessThanThenEqual;
+
+                if (part == "gte ")
+                    id = AtomType.GreaterThanThenEqual;
+
                 _atom = new Atom(id, beginning, finishing);
 
                 return true;

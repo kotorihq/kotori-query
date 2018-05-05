@@ -189,5 +189,31 @@ namespace KotoriQuery.Tests
                 AtomType.Done
             }, atoms.Select(x => x.Type));
         }
+
+        [Theory]
+        [InlineData("eq", AtomType.Equal)]
+        [InlineData("ne", AtomType.NotEqual)]
+        [InlineData("lt", AtomType.LessThan)]
+        [InlineData("gt", AtomType.GreaterThan)]
+        [InlineData("lte", AtomType.LessThanThenEqual)]
+        [InlineData("gte", AtomType.GreaterThanThenEqual)]
+        public void Operators(string op, AtomType atom)
+        {
+            var q = $"foo {op} 123";
+
+            var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
+            
+            Assert.Equal(6, atoms.Count());
+
+            Assert.Equal(new List<AtomType> 
+            { 
+                AtomType.Identifier,
+                AtomType.Spaces,
+                atom,
+                AtomType.Spaces,
+                AtomType.Integer,
+                AtomType.Done
+            }, atoms.Select(x => x.Type));
+        }
     }
 }
