@@ -244,5 +244,34 @@ namespace KotoriQuery.Tests
                 AtomType.Done
             }, atoms.Select(x => x.Type));
         }
+
+        [Fact]
+        public void Parenthesis()
+        {
+            var q = "(foo(a ( bar )c) )";
+
+            var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
+            
+            Assert.Equal(15, atoms.Count());
+
+            Assert.Equal(new List<AtomType> 
+            { 
+                AtomType.OpenParenthesis,
+                AtomType.Identifier,
+                AtomType.OpenParenthesis,
+                AtomType.Identifier,
+                AtomType.Spaces,
+                AtomType.OpenParenthesis,
+                AtomType.Spaces,
+                AtomType.Identifier,
+                AtomType.Spaces,
+                AtomType.CloseParenthesis,
+                AtomType.Identifier,
+                AtomType.CloseParenthesis,
+                AtomType.Spaces,
+                AtomType.CloseParenthesis,
+                AtomType.Done
+            }, atoms.Select(x => x.Type));
+        }
     }
 }
