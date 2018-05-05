@@ -125,19 +125,6 @@ namespace KotoriQuery.Tokenize
                     _atom = new Atom(AtomType.Dot, beginning, beginning);
                     break;
 
-                case '!':
-                    NextCharacter();
-
-                    if (_c == '=') 
-                    {
-                        NextCharacter();
-                        _atom = new Atom(AtomType.ExclamationThenEqual, beginning, _position);
-                        break;
-                    }
-
-                    _atom = new Atom(AtomType.Exclamation, beginning, beginning);
-                    break;
-
                 case '<':
                     NextCharacter();
 
@@ -181,30 +168,6 @@ namespace KotoriQuery.Tokenize
 
                 case '\'':
                     ConsumeString(beginning);
-                    break;
-
-                case '&':
-                    NextCharacter();
-
-                    if (_c == '&') {
-                        NextCharacter();
-                        _atom = new Atom(AtomType.AmpersandPair, beginning, _position);
-                        break;
-                    }
-                    
-                    _atom = new Atom(AtomType.Ampersand, beginning, beginning);
-                    break;
-
-                case '|':
-                    NextCharacter();
-
-                    if (_c == '|') {
-                        NextCharacter();
-                        _atom = new Atom(AtomType.PipePair, beginning, _position);
-                        break;
-                    }
-
-                    _atom = new Atom(AtomType.Pipe, beginning, beginning);
                     break;
 
                 case End:

@@ -16,8 +16,6 @@ namespace KotoriQuery.Tokenize
         Plus,
         Minus,
         Dot, // used
-        Exclamation,
-        ExclamationThenEqual,
         Equal, // used
         NotEqual, // used
         LessThan, // used
@@ -26,10 +24,6 @@ namespace KotoriQuery.Tokenize
         GreaterThanThenEqual, // used
         OpenParenthesis,
         CloseParenthesis,
-        Ampersand,
-        AmpersandPair,
-        Pipe,
-        PipePair,
         Done // used
     }
 
@@ -49,19 +43,14 @@ namespace KotoriQuery.Tokenize
            { "Plus", AtomType.Plus },
            { "Minus", AtomType.Minus },
            { "Dot", AtomType.Dot },
-           { "Exclamation", AtomType.Exclamation },
-           { "ExclamationThenEqual", AtomType.ExclamationThenEqual },
            { "Equal", AtomType.Equal },
+           { "NotEqual", AtomType.NotEqual },
            { "LessThan", AtomType.LessThan },
            { "LessThanThenEqual", AtomType.LessThanThenEqual },
            { "GreaterThan", AtomType.GreaterThan },
            { "GreaterThanThenEqual", AtomType.GreaterThanThenEqual },
            { "OpenParenthesis", AtomType.OpenParenthesis },
            { "CloseParenthesis", AtomType.CloseParenthesis },
-           { "Ampersand", AtomType.Ampersand },
-           { "AmpersandPair", AtomType.AmpersandPair },
-           { "Pipe", AtomType.Pipe },
-           { "PipePair", AtomType.PipePair },
            { "Done", AtomType.Done }
         };
 
