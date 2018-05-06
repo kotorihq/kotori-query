@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+using KotoriQuery.Tokenizer;
+
 namespace KotoriQuery.Translator
 {
     public interface ITranslator
     {
-        string Translate(string query);
+        IEnumerable<AtomType> AllowedAtomTypes { get; }
+        string GetTranslatedQuery();
     }
 }
