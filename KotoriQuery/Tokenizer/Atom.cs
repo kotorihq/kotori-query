@@ -2,7 +2,7 @@
 
 namespace KotoriQuery.Tokenizer
 {
-    public struct Atom 
+    public class Atom 
     {
         public static readonly Atom Done = new Atom(AtomType.Done, TextPosition.Done, TextPosition.Done);
 
@@ -12,6 +12,10 @@ namespace KotoriQuery.Tokenizer
 
         public readonly TextPosition End;
 
+        public Atom()
+        {
+        }
+        
         public Atom(AtomType type, TextPosition start, TextPosition end) 
         {
             if (start.Offset > end.Offset)
