@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace KotoriQuery.Tokenize
+namespace KotoriQuery.Tokenizer
 {
     public enum AtomType 
     {

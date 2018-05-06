@@ -1,6 +1,6 @@
-namespace KotoriQuery.Tokenize
+namespace KotoriQuery.Tokenizer
 {
-    public struct TextPosition 
+    public struct TextPosition
     {
         public static readonly TextPosition Done = new TextPosition(-1);
 

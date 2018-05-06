@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KotoriQuery.Tokenize
+namespace KotoriQuery.Tokenizer
 {
     public class Atomizer<TReader> : IEnumerable<Atom> where TReader : struct, ICharacterReader 
     {

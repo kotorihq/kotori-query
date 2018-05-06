@@ -1,4 +1,4 @@
-namespace KotoriQuery.Tokenize
+namespace KotoriQuery.Tokenizer
 {
     public struct Char32 
     {

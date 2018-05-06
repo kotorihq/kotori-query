@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using KotoriQuery.Tokenize;
+using KotoriQuery.Tokenizer;
 using Xunit;
 
 namespace KotoriQuery.Tests

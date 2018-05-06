@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace KotoriQuery.Tokenize
+namespace KotoriQuery.Tokenizer
 {
     public static class Tester
     {

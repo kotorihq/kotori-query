@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KotoriQuery.Tokenize 
+namespace KotoriQuery.Tokenizer
 {
     public struct Atom 
     {

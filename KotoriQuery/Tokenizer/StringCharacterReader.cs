@@ -1,6 +1,6 @@
 using System;
 
-namespace KotoriQuery.Tokenize
+namespace KotoriQuery.Tokenizer
 {
     /// <summary>
     /// Converts each character (maximum UTF-16 i.e. 4 bytes) to an Int32 wrapped as Char32 allowing
