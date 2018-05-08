@@ -12,7 +12,8 @@ namespace KotoriQuery.Translator
             AtomType.Descending,
             AtomType.Spaces,
             AtomType.Comma,
-            AtomType.Slash
+            AtomType.Slash,
+            AtomType.Done
         };
 
         public DocumentDbOrderBy(string query) : base(query)

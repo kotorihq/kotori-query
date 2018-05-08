@@ -41,7 +41,7 @@ namespace KotoriQuery.Translator
 
                     case AtomType.Slash:
                         if (!identifierChain) 
-                            result.Append(Prefix + ".");
+                            result.Append(".");
                         else
                             result.Append(".");
                         break;
@@ -52,7 +52,15 @@ namespace KotoriQuery.Translator
                         break;
 
                     case AtomType.Identifier:
+                        if (!identifierChain)
+                            result.Append(Prefix + ".");
 
+                        identifierChain = true;
+
+                        result.Append(GetAtomText(a, _query));
+                        break;
+
+                    case AtomType.Done:
                         break;
                 }
             }
