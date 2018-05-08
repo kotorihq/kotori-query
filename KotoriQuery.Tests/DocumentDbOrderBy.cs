@@ -28,6 +28,8 @@ namespace KotoriQuery.Tests
         [InlineData("a,b", "c.a,c.b")]
         [InlineData("a,   b", "c.a, c.b")]
         [InlineData("first asc,second desc", "c.first ,c.second desc")]
+        [InlineData("foo/bar/something", "c.foo.bar.something")]
+        [InlineData("foo/bar/something,something/bar/foo", "c.foo.bar.something,c.something.bar.foo")]
         [InlineData("", "")]
         public void OrderBys(string query, string result)
         {
