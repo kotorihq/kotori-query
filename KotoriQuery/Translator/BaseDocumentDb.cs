@@ -20,6 +20,7 @@ namespace KotoriQuery.Translator
         {
             var result = new StringBuilder();
             bool identifierChain = false;
+            Atom previous = null;
 
             foreach(var a in _atoms)
             {
@@ -41,9 +42,14 @@ namespace KotoriQuery.Translator
 
                     case AtomType.Slash:
                         if (!identifierChain) 
+                        {
                             result.Append(".");
+                        }
                         else
-                            result.Append(".");
+                        {
+                            if (previous?.Type != AtomType.Slash)
+                                result.Append(".");
+                        }
                         break;
 
                     case AtomType.Spaces:
@@ -63,6 +69,8 @@ namespace KotoriQuery.Translator
                     case AtomType.Done:
                         break;
                 }
+
+                previous = a;
             }
 
             return result.ToString();
