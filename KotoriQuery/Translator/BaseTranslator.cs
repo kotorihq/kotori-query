@@ -22,15 +22,15 @@ namespace KotoriQuery.Translator
             return atom.GetText(query);    
         }
 
-        protected void CheckAllowedAtoms(IEnumerable<Atom> allowedAtoms, IEnumerable<Atom> realAtoms)
+        protected void CheckAllowedAtoms(IEnumerable<AtomType> allowedAtomTypes, IEnumerable<Atom> realAtoms)
         {
-            if (allowedAtoms == null)
-                throw new System.ArgumentNullException(nameof(allowedAtoms));
+            if (allowedAtomTypes == null)
+                throw new System.ArgumentNullException(nameof(allowedAtomTypes));
 
             if (realAtoms == null)
                 throw new System.ArgumentNullException(nameof(realAtoms));
 
-            var atom = realAtoms.FirstOrDefault(a => allowedAtoms.All(a2 => a2.Type != a.Type));
+            var atom = realAtoms.FirstOrDefault(a => allowedAtomTypes.All(a2 => a2 != a.Type));
 
             if (atom != null)
                 throw new KotoriQueryException($"Atom type {atom.Type} is not allowed.");

@@ -11,19 +11,18 @@ namespace KotoriQuery.Translator
             AtomType.Ascending,
             AtomType.Descending,
             AtomType.Spaces,
-            AtomType.Comma
+            AtomType.Comma,
+            AtomType.Slash
         };
 
         public DocumentDbOrderBy(string query) : base(query)
-        {
-            var atoms = GetAtoms(query);
-            
+        {   
         }
 
         public string GetTranslatedQuery()
         {
-            throw new System.NotImplementedException("TODO");
-            //CheckAllowedAtoms(AllowedAtomTypes, )
+            CheckAllowedAtoms(AllowedAtomTypes, _atoms);
+            return Translate();
         }
     }
 }
