@@ -66,6 +66,10 @@ namespace KotoriQuery.Translator
                         result.Append(GetAtomText(a, _query));
                         break;
 
+                    case AtomType.Asterisk:
+                        result.Append("*");
+                        break;
+                        
                     case AtomType.Done:
                         break;
                 }

@@ -10,10 +10,10 @@ namespace KotoriQuery.Tests
         [Fact]
         public void AhOhYikes()
         {
-            var q = "ah,oh797,yikes";
+            var q = "ah,oh797,yikes,*";
             var atoms = new Atomizer<StringCharacterReader>(new StringCharacterReader(q));
             
-            Assert.Equal(6, atoms.Count());
+            Assert.Equal(8, atoms.Count());
             Assert.Equal(new List<AtomType> 
             { 
                 AtomType.Identifier,
@@ -21,6 +21,8 @@ namespace KotoriQuery.Tests
                 AtomType.Identifier,
                 AtomType.Comma,
                 AtomType.Identifier,
+                AtomType.Comma,
+                AtomType.Asterisk,
                 AtomType.Done
             }, atoms.Select(x => x.Type));
         }
@@ -49,7 +51,7 @@ namespace KotoriQuery.Tests
 
         [Theory]
         [InlineData("±")]
-        //[InlineData("!")]
+        [InlineData("!")]
         [InlineData("?")]
         public void BadOnes(string q)
         {
