@@ -358,7 +358,9 @@ namespace KotoriQuery.Tokenizer
             var savedNextPosition = _nextPosition;
 
             var match = true;
-            foreach (char c in characters) {
+            
+            foreach (char c in characters) 
+            {
                 if (!ReadNextCharacter().Equals(c)) 
                 {
                     match = false;

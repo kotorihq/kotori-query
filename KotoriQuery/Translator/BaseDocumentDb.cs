@@ -69,7 +69,60 @@ namespace KotoriQuery.Translator
                     case AtomType.Asterisk:
                         result.Append("*");
                         break;
-                        
+                    
+                    case AtomType.Integer:
+                    case AtomType.Float:
+                        result.Append(GetAtomText(a, _query));
+                        break;
+
+                    case AtomType.String:
+                        var original = GetAtomText(a, _query);
+                        var clean = GetCleanQuotedString(original);
+                        var json = GetJsonString(clean);
+                    
+                        result.Append("'" + json + "'");
+                        break;
+
+                    case AtomType.Equal:
+                        result.Append("=");
+                        break;
+
+                    case AtomType.NotEqual:
+                        result.Append("<>");
+                        break;
+
+                    case AtomType.LessThan:
+                        result.Append("<");
+                        break;
+
+                    case AtomType.GreaterThan:
+                        result.Append(">");
+                        break;
+
+                    case AtomType.LessThanThenEqual:
+                        result.Append("<=");
+                        break;
+
+                    case AtomType.GreaterThanThenEqual:
+                        result.Append(">=");
+                        break;
+
+                    case AtomType.And:
+                        result.Append("and");
+                        break;
+
+                    case AtomType.Or:
+                        result.Append("or");
+                        break;
+
+                    case AtomType.OpenParenthesis:
+                        result.Append("(");
+                        break;
+
+                    case AtomType.CloseParenthesis:
+                        result.Append(")");
+                        break;
+
                     case AtomType.Done:
                         break;
                 }

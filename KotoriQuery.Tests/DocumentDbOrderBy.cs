@@ -10,6 +10,7 @@ namespace KotoriQuery.Tests
         [InlineData("a,b desc,*")]
         [InlineData("(damn)")]
         [InlineData("x eq 3")]
+        [InlineData("x eq 'xoo'")]
         public void InvalidTokens(string query)
         {
             var orderBy = new Translator.DocumentDbOrderBy(query);
