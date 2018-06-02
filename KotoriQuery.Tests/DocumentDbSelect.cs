@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using KotoriQuery.AppException;
 using Xunit;
 
@@ -37,6 +38,15 @@ namespace KotoriQuery.Tests
             var select = new Translator.DocumentDbSelect(query);
             var tran = select.GetTranslatedQuery();
             Assert.Equal(result, tran);
+        }
+
+        [Fact]
+        public void SelectsWithFieldTransformation()
+        {
+            var query = "a,b,id, z";
+            var select = new Translator.DocumentDbSelect(query);
+            var tran = select.GetTranslatedQuery();
+            Assert.Equal("c.a,c.b,c.identification, c.z", tran);
         }
     }
 }

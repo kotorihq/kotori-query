@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using KotoriQuery.Helpers;
 using KotoriQuery.Tokenizer;
 
 namespace KotoriQuery.Translator
@@ -16,7 +17,11 @@ namespace KotoriQuery.Translator
             AtomType.Done
         };
 
-        public DocumentDbOrderBy(string query) : base(query)
+        public DocumentDbOrderBy(string query) : base(query, null)
+        {   
+        }
+
+        public DocumentDbOrderBy(string query, IEnumerable<FieldTransformation> fieldTransformations) : base(query, fieldTransformations)
         {   
         }
 

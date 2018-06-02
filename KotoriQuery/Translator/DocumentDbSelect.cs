@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using KotoriQuery.Helpers;
 using KotoriQuery.Tokenizer;
 
 namespace KotoriQuery.Translator
@@ -15,7 +16,11 @@ namespace KotoriQuery.Translator
             AtomType.Done
         };
 
-        public DocumentDbSelect(string query) : base(query)
+        public DocumentDbSelect(string query) : base(query, null)
+        {   
+        }
+
+        public DocumentDbSelect(string query, IEnumerable<FieldTransformation> fieldTransformations) : base(query, fieldTransformations)
         {   
         }
 

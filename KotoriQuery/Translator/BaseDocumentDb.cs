@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using KotoriQuery.Helpers;
 using KotoriQuery.Tokenizer;
 
 namespace KotoriQuery.Translator
@@ -9,61 +11,60 @@ namespace KotoriQuery.Translator
         protected const string Prefix = "c";
         protected string _query { get; private set; }
         protected IEnumerable<Atom> _atoms { get; private set; }
+        protected IEnumerable<FieldTransformation> _fieldTransformations { get; private set;}
 
-        public BaseDocumentDb(string query)
+        public BaseDocumentDb(string query, IEnumerable<FieldTransformation> fieldTransformations)
         {
             _atoms = GetAtoms(query);
+            _fieldTransformations = fieldTransformations;
             _query = query;
         }
 
         protected string Translate()
         {
             var result = new StringBuilder();
-            bool identifierChain = false;
+            var identifierChain = new List<string>();
             Atom previous = null;
 
             foreach(var a in _atoms)
             {
+                if (a.Type != AtomType.Identifier &&
+                    a.Type != AtomType.Slash)
+                {
+                    ProcessIdentifier(ref identifierChain, ref result);
+                }
+
                 switch(a.Type)
                 {
                     case AtomType.Ascending:
-                        identifierChain = false;
                         break;
 
                     case AtomType.Descending:
-                        identifierChain = false;
                         result.Append("desc");
                         break;
 
                     case AtomType.Comma:
-                        identifierChain = false;
                         result.Append(",");
                         break;
 
                     case AtomType.Slash:
-                        if (!identifierChain) 
+                        if (!identifierChain.Any()) 
                         {
-                            result.Append(".");
+                            identifierChain.Add(".");
                         }
                         else
                         {
                             if (previous?.Type != AtomType.Slash)
-                                result.Append(".");
+                                identifierChain.Add(".");
                         }
                         break;
 
                     case AtomType.Spaces:
-                        identifierChain = false;
                         result.Append(" ");
                         break;
 
                     case AtomType.Identifier:
-                        if (!identifierChain)
-                            result.Append(Prefix + ".");
-
-                        identifierChain = true;
-
-                        result.Append(GetAtomText(a, _query));
+                        identifierChain.Add(GetAtomText(a, _query));
                         break;
 
                     case AtomType.Asterisk:
@@ -131,6 +132,22 @@ namespace KotoriQuery.Translator
             }
 
             return result.ToString();
+        }
+
+        void ProcessIdentifier(ref List<string> chain, ref StringBuilder sb)
+        {
+            if (!chain.Any())
+                return;
+
+            sb.Append(Prefix);
+            sb.Append(".");
+
+            foreach(var c in chain)
+            {    
+                sb.Append(c);                
+            }
+
+            chain = new List<string>();
         }
     }
 }
