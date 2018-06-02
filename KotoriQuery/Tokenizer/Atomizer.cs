@@ -296,16 +296,19 @@ namespace KotoriQuery.Tokenizer
         {
             var finishing = _position;
             Char32 startChar = _c;
+            Char32 previousChar = _c;
 
             // skip quote
             NextCharacter();
 
             while (true) 
-            {
-                if (TryConsumeChar(ref finishing, startChar)) 
+            {   
+                if (TryConsumeChar(ref finishing, startChar, ref previousChar)) 
                 {
                     // ending quote or loop until the reader reaches a hard limit
-                    if (_c == startChar) 
+                    if (_c == startChar &&
+                        previousChar.Code != 0 &&
+                        previousChar.ToString() != @"\") 
                     { 
                         finishing = _position;
 
@@ -325,22 +328,18 @@ namespace KotoriQuery.Tokenizer
             _atom = new Atom(AtomType.String, beginning, finishing);
         }
 
-        /// <summary>
-        /// Store next characts while is Char (i.e. not at end or match on start character)
-        /// </summary>
-        /// <param name="finishing"></param>
-        /// <param name="startChar"></param>
-        /// <returns></returns>
-        private bool TryConsumeChar(ref TextPosition finishing, Char32 startChar) 
+        private bool TryConsumeChar(ref TextPosition finishing, Char32 startChar, ref Char32 previousChar) 
         {
             if (_c == End) 
             {
                 return false;
             }
 
-            if (_c != startChar) 
+            if (_c != startChar ||
+                (_c == startChar && previousChar.ToString() == @"\")) 
             {
                 finishing = _position;
+                previousChar = new Char32(_c.Code);
                 NextCharacter();
             }
 

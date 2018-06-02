@@ -71,11 +71,6 @@ namespace KotoriQuery.Translator
 
                 switch (c) 
                 {
-                    case '\\':
-                    case '\'':
-                        sb.Append('\\');
-                        sb.Append(c);
-                        break;
                     case '\b':
                         sb.Append("\\b");
                         break;

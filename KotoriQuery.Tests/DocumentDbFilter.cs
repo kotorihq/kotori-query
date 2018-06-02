@@ -30,7 +30,8 @@ namespace KotoriQuery.Tests
         [InlineData("x ne 428", "c.x <> 428")]
         [InlineData("a/b gte 1 and a/b lte 10", "c.a.b >= 1 and c.a.b <= 10")]
         [InlineData("oh gt 3.1 or (ah lt 4)", "c.oh > 3.1 or (c.ah < 4)")]
-        //[InlineData("moo eq 'koto\'ri\''", "c.moo = 'koto\'ri\''")]
+        [InlineData(@"moo eq 'koto\'ri'", @"c.moo = 'koto\'ri'")]
+        [InlineData(@"moo eq 'koto\'ri\''", @"c.moo = 'koto\'ri\''")]
         [InlineData("", "")]
         public void Filters(string query, string result)
         {

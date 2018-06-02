@@ -24,7 +24,7 @@ namespace KotoriQuery.Translator
             AtomType.CloseParenthesis,
             AtomType.And,
             AtomType.Or,
-            AtomType.Done
+            AtomType.Done,
         };
 
         public DocumentDbFilter(string query) : base(query)
