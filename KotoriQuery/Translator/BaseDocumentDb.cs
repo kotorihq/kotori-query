@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using KotoriQuery.Helpers;
 using KotoriQuery.Tokenizer;
+using Sushi2;
 
 namespace KotoriQuery.Translator
 {
@@ -52,10 +53,9 @@ namespace KotoriQuery.Translator
                         {
                             identifierChain.Add(".");
                         }
-                        else
+                        else if (previous?.Type != AtomType.Slash)
                         {
-                            if (previous?.Type != AtomType.Slash)
-                                identifierChain.Add(".");
+                            identifierChain.Add(".");
                         }
                         break;
 
@@ -142,12 +142,42 @@ namespace KotoriQuery.Translator
             sb.Append(Prefix);
             sb.Append(".");
 
-            foreach(var c in chain)
+            var newChain = GetTransformedIdentifierChain(_fieldTransformations, chain);
+
+            foreach(var c in newChain)
             {    
                 sb.Append(c);                
             }
 
             chain = new List<string>();
         }
+
+        IEnumerable<string> GetTransformedIdentifierChain(IEnumerable<FieldTransformation> transformations, List<string> chain)
+        {
+            if (transformations == null ||
+                !transformations.Any())
+                return chain;
+
+            var m = chain.ToImplodedString("");
+            var t = transformations.FirstOrDefault(x => x.From.Replace("/", ".") == chain.ToImplodedString(""));
+
+            if (t == null)
+                return chain;
+            
+            var result = t.To.Split(new [] { '/' });
+            var result2 = new List<string>();
+
+            foreach(var r in result)
+            {
+                if (result2.Any())
+                    result2.Add(".");
+
+                result2.Add(r);
+            }
+
+            return result2;
+            
+
+        } 
     }
 }

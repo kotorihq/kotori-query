@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using KotoriQuery.AppException;
+using KotoriQuery.Helpers;
 using Xunit;
 
 namespace KotoriQuery.Tests
@@ -43,10 +44,14 @@ namespace KotoriQuery.Tests
         [Fact]
         public void SelectsWithFieldTransformation()
         {
-            var query = "a,b,id, z";
-            var select = new Translator.DocumentDbSelect(query);
+            var query = "a,b,id, foo/bar2/z";
+            var select = new Translator.DocumentDbSelect(query, new List<FieldTransformation>
+            {
+                new FieldTransformation("id", "identification"),
+                new FieldTransformation("foo/bar2/z", "barfoo/z")
+            });
             var tran = select.GetTranslatedQuery();
-            Assert.Equal("c.a,c.b,c.identification, c.z", tran);
+            Assert.Equal("c.a,c.b,c.identification, c.barfoo.z", tran);
         }
     }
 }
