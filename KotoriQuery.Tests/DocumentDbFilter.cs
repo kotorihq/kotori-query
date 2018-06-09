@@ -45,15 +45,16 @@ namespace KotoriQuery.Tests
         [Fact]
         public void FilterTransformation()
         {
-            var query = "a/b gte 1 and a/b lte 10";
+            var query = "a/b gte 1 and a/b lte 10 or foo/bar eq 'hi' or foo/bar eq 3";
             var filter = new Translator.DocumentDbFilter(query, new List<FieldTransformation>
                 {
                     new FieldTransformation("a/b", "b/a"),
-                    new FieldTransformation("b/a", "a/b")
+                    new FieldTransformation("b/a", "a/b", (v) => { return v.ToUpper(); }),
+                    new FieldTransformation("foo/bar", "bar/foo", (v) => { return v.ToUpper() + "!"; })
                 });
 
             var tran = filter.GetTranslatedQuery();
-            Assert.Equal("c.b.a >= 1 and c.b.a <= 10", tran);
+            Assert.Equal("c.b.a >= 1 and c.b.a <= 10 or c.bar.foo = 'HI!' or c.bar.foo = 3", tran);
         }
     }
 }

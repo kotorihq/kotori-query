@@ -44,14 +44,15 @@ namespace KotoriQuery.Tests
         [Fact]
         public void SelectsWithFieldTransformation()
         {
-            var query = "a,b,id, foo/bar2/z";
+            var query = "a,b,id, foo/bar2/z, r";
             var select = new Translator.DocumentDbSelect(query, new List<FieldTransformation>
             {
                 new FieldTransformation("id", "identification"),
-                new FieldTransformation("foo/bar2/z", "barfoo/z")
+                new FieldTransformation("foo/bar2/z", "barfoo/z"),
+                new FieldTransformation("r", null)
             });
             var tran = select.GetTranslatedQuery();
-            Assert.Equal("c.a,c.b,c.identification, c.barfoo.z", tran);
+            Assert.Equal("c.a,c.b,c.identification, c.barfoo.z, c.r", tran);
         }
     }
 }

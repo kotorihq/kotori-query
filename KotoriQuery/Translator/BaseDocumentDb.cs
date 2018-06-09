@@ -25,6 +25,7 @@ namespace KotoriQuery.Translator
         {
             var result = new StringBuilder();
             var identifierChain = new List<string>();
+            string lastIdentifier = null;
             Atom previous = null;
 
             foreach(var a in _atoms)
@@ -32,7 +33,11 @@ namespace KotoriQuery.Translator
                 if (a.Type != AtomType.Identifier &&
                     a.Type != AtomType.Slash)
                 {
-                    ProcessIdentifier(ref identifierChain, ref result);
+                    if (identifierChain.Any())
+                    {
+                        var r = ProcessIdentifier(ref identifierChain, ref lastIdentifier);
+                        result.Append(r);
+                    }
                 }
 
                 switch(a.Type)
@@ -74,11 +79,27 @@ namespace KotoriQuery.Translator
                     case AtomType.Integer:
                     case AtomType.Float:
                         result.Append(GetAtomText(a, _query));
+                        lastIdentifier = null;
                         break;
 
                     case AtomType.String:
                         var original = GetAtomText(a, _query);
                         var clean = GetCleanQuotedString(original);
+
+                        if (_fieldTransformations != null &&
+                            _fieldTransformations.Any() &&
+                            lastIdentifier != null)
+                        {
+                            var t = _fieldTransformations.FirstOrDefault(x => x.From == lastIdentifier);
+
+                            if (t != null &&
+                                t.Translator != null)
+                            {
+                                clean = t.Translator(clean);
+                                lastIdentifier = null;
+                            }
+                        }
+                        
                         var json = GetJsonString(clean);
                     
                         result.Append("'" + json + "'");
@@ -134,15 +155,18 @@ namespace KotoriQuery.Translator
             return result.ToString();
         }
 
-        void ProcessIdentifier(ref List<string> chain, ref StringBuilder sb)
+        string ProcessIdentifier(ref List<string> chain, ref string lastIdentifier)
         {
-            if (!chain.Any())
-                return;
+            lastIdentifier = null;
 
+            if (!chain.Any())
+                return string.Empty;  
+
+            var sb = new StringBuilder();
             sb.Append(Prefix);
             sb.Append(".");
 
-            var newChain = GetTransformedIdentifierChain(_fieldTransformations, chain);
+            var newChain = GetTransformedIdentifierChain(_fieldTransformations, chain, ref lastIdentifier);
 
             foreach(var c in newChain)
             {    
@@ -150,9 +174,10 @@ namespace KotoriQuery.Translator
             }
 
             chain = new List<string>();
+            return sb.ToString();
         }
 
-        IEnumerable<string> GetTransformedIdentifierChain(IEnumerable<FieldTransformation> transformations, List<string> chain)
+        IEnumerable<string> GetTransformedIdentifierChain(IEnumerable<FieldTransformation> transformations, List<string> chain, ref string lastIdentifier)
         {
             if (transformations == null ||
                 !transformations.Any())
@@ -163,8 +188,13 @@ namespace KotoriQuery.Translator
 
             if (t == null)
                 return chain;
+
+            lastIdentifier = t.From;
             
-            var result = t.To.Split(new [] { '/' });
+            if (t.To == null)
+                return chain;
+            
+            var result = t.To?.Split(new [] { '/' });
             var result2 = new List<string>();
 
             foreach(var r in result)
@@ -176,8 +206,6 @@ namespace KotoriQuery.Translator
             }
 
             return result2;
-            
-
         } 
     }
 }
