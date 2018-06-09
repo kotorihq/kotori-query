@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using KotoriQuery.AppException;
+using KotoriQuery.Helpers;
 using Xunit;
 
 namespace KotoriQuery.Tests
@@ -38,6 +40,22 @@ namespace KotoriQuery.Tests
             var orderBy = new Translator.DocumentDbOrderBy(query);
             var tran = orderBy.GetTranslatedQuery();
             Assert.Equal(result, tran);
+        }
+
+        [Fact]
+        public void OrderBysTransformation()
+        {
+            var query = "first/last asc,second desc,third";
+            var orderBy = new Translator.DocumentDbOrderBy(query, new List<FieldTransformation>
+            {
+                new FieldTransformation("second", "Second2"),
+                new FieldTransformation("first/last", "first2/last2"),
+                new FieldTransformation("something", "anything"),
+                new FieldTransformation("first2/last2", "first3/last3")
+            });
+
+            var tran = orderBy.GetTranslatedQuery();
+            Assert.Equal("c.first2.last2 ,c.Second2 desc,c.third", tran);
         }
     }
 }
