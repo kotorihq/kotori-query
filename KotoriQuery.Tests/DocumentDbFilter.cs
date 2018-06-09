@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using KotoriQuery.AppException;
+using KotoriQuery.Helpers;
 using Xunit;
 
 namespace KotoriQuery.Tests
@@ -33,11 +35,25 @@ namespace KotoriQuery.Tests
         [InlineData(@"moo eq 'koto\'ri'", @"c.moo = 'koto\'ri'")]
         [InlineData(@"moo eq 'koto\'ri\''", @"c.moo = 'koto\'ri\''")]
         [InlineData("", "")]
-        public void Filters(string query, string result)
+        public void Filter(string query, string result)
         {
             var filter = new Translator.DocumentDbFilter(query);
             var tran = filter.GetTranslatedQuery();
             Assert.Equal(result, tran);
+        }
+
+        [Fact]
+        public void FilterTransformation()
+        {
+            var query = "a/b gte 1 and a/b lte 10";
+            var filter = new Translator.DocumentDbFilter(query, new List<FieldTransformation>
+                {
+                    new FieldTransformation("a/b", "b/a"),
+                    new FieldTransformation("b/a", "a/b")
+                });
+
+            var tran = filter.GetTranslatedQuery();
+            Assert.Equal("c.b.a >= 1 and c.b.a <= 10", tran);
         }
     }
 }
