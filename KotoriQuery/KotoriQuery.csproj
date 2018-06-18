@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <PackageId>kotori-query</PackageId>
     <Title>kotori query</Title>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>frohikey</Authors>
     <PackageLicenseUrl>https://github.com/kotorihq/kotori-query/blob/master/LICENSE</PackageLicenseUrl>
     <Owners>Goto10</Owners>
